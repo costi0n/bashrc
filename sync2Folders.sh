@@ -36,8 +36,8 @@ if ! [[ $VALUE =~ $reg ]] ; then
 fi
 
 if [ "$VALUE" -ne "$IIbit" ]; then
-   exit 1
-else
    $RSYNC -avzh $SRC $DST
+else
+   exit 1
 fi
 
