@@ -1,4 +1,10 @@
 #!/bin/bash
+###
+##
+#  scripted by costi0n
+##
+###
+
 
 read -p "inserire il nome del sito/dominio [ENTER] ": site
 site=${site:-default.com}
@@ -13,5 +19,8 @@ mkdir -p $logs
 mkdir -p $html
 
 echo -en "creato il percorso "$logs" e "$html"\n"
+
+
+# working in progress ...
 
 

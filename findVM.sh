@@ -1,4 +1,9 @@
 #!/bin/bash
+###
+##
+# scripted by costi0n
+##
+###
 
 
 net='10.169.15.'
