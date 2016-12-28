@@ -19,7 +19,7 @@ IIbit="7"
 
 #-------------------------------------------------------------------------
 # per casi dove essistono più interfacce virutali
-IFNAME=$(ip link show | grep "mtu" |\
+IFNAME=$(ip link show | grep "mtu" | grep "UP" |\
          grep "eth" | awk -F" " '{print $2}' |\
          awk -F":" '{print $1}')
 
