@@ -10,11 +10,19 @@
 
 SRC=$1
 DST=$2
-NOW=$(date +%d%H%M%S)
 CWD=$(pwd)
 LOG=$CWD"/sync2Folders.log"
 RSYNC="/usr/bin/rsync"
-IIbit="7"  # filtra le cloud in base al secondo bit del interfaccia di rete
+IIbit="7"
+
+now () {
+   date +[%d-%m-%Y][%H:%M:%S]
+}
+
+
+log () {
+  echo $(now) "> $1" >> $LOG
+}
 
 
 #-------------------------------------------------------------------------
@@ -32,14 +40,15 @@ VALUE=$(ifconfig $IFNAME | grep "inet" | grep -v "inet6" |\
 echo "---------------------------------------" >> $LOG
 if [ "$#" -ne 2 ]
   then
-    echo "$NOW > uno o più parametri mancanti" >> $LOG
+    log "uno o più parametri mancanti"
   exit 255
 fi
 
 # fa un ulteriore controllo sul dato racolto nella variabile $VALUE
 reg='^[0-9]+$'
 if ! [[ $VALUE =~ $reg ]] ; then
-   echo "$NOW > si è verificato un errore, esecuzione terminata !" >> $LOG
+   log "si è verificato un errore, esecuzione terminata !"
+   log "var VALUE = $VALUE"
    exit 1
 fi
 
