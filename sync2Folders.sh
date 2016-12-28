@@ -14,7 +14,7 @@ NOW=$(date +%d%H%M%S)
 CWD=$(pwd)
 LOG=$CWD"/sync2Folders.log"
 RSYNC="/usr/bin/rsync"
-IIbit="7"
+IIbit="7"  # filtra le cloud in base al secondo bit del interfaccia di rete
 
 
 #-------------------------------------------------------------------------
