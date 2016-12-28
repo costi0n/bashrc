@@ -2,7 +2,8 @@
 
 ###
 ##
-#  scripted by costi0n
+#  scripted by costi0n 4 ALGA Progect
+#            - 28-12-2016 -
 #  sync2Folders.sh /path/source /path/destination
 ##
 ###
@@ -14,6 +15,7 @@ CWD=$(pwd)
 LOG=$CWD"/sync2Folders.log"
 RSYNC="/usr/bin/rsync"
 IIbit="7"
+
 
 #-------------------------------------------------------------------------
 # per casi dove essistono più interfacce virutali
@@ -34,12 +36,19 @@ if [ "$#" -ne 2 ]
   exit 255
 fi
 
+# fa un ulteriore controllo sul dato racolto nella variabile $VALUE
 reg='^[0-9]+$'
 if ! [[ $VALUE =~ $reg ]] ; then
    echo "$NOW > si è verificato un errore, esecuzione terminata !" >> $LOG
    exit 1
 fi
 
+# se il prercordo della destinazione non essiste lo crea
+if [ ! -d "$DST" ]; then
+  mkdir -p $DST
+fi
+
+# se il valore del secondo bit non è 7 ( quindi non cloud ) allora parte il sync
 if [ "$VALUE" -ne "$IIbit" ]; then
    $RSYNC -avzh $SRC $DST
 else
