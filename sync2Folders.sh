@@ -16,9 +16,14 @@ RSYNC="/usr/bin/rsync"
 IIbit="7"
 
 #-------------------------------------------------------------------------
-VALUE=$(ifconfig | grep "inet" | grep -v "inet6" | \
-        grep -v "127.0.0.1" | awk -F" " '{print $2}' |\
-        awk -F":" '{print $2}' | awk -F"." '{print $2}')
+
+IFNAME=$(ip link show | grep "mtu" | \                         #  per casi dove
+         grep "eth" | awk -F" " '{print $2}' | \               # dove essistono
+         awk -F":" '{print $1}')                               # più interfacce
+
+VALUE=$(ifconfig $IFNAME | grep "inet" | grep -v "inet6" | \   #  cerca il valore
+        grep -v "127.0.0.1" | awk -F" " '{print $2}' |\        # del secondo bit
+        awk -F":" '{print $2}' | awk -F"." '{print $2}')       # sul interfaccia
 
 
 echo "---------------------------------------" >> $LOG
@@ -38,6 +43,6 @@ fi
 if [ "$VALUE" -ne "$IIbit" ]; then
    $RSYNC -avzh $SRC $DST
 else
-   exit 1
+   echo 1
 fi
 
