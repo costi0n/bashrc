@@ -16,23 +16,23 @@ RSYNC="/usr/bin/rsync"
 IIbit="7"
 
 #-------------------------------------------------------------------------
+# per casi dove essistono più interfacce virutali
+IFNAME=$(ip link show | grep "mtu" |\
+         grep "eth" | awk -F" " '{print $2}' |\
+         awk -F":" '{print $1}')
 
-IFNAME=$(ip link show | grep "mtu" | \                         #  per casi dove
-         grep "eth" | awk -F" " '{print $2}' | \               # dove essistono
-         awk -F":" '{print $1}')                               # più interfacce
+# cerca il valore del secondobit sul interfaccia
+VALUE=$(ifconfig $IFNAME | grep "inet" | grep -v "inet6" |\
+        grep -v "127.0.0.1" | awk -F" " '{print $2}' |\
+        awk -F":" '{print $2}' | awk -F"." '{print $2}')
 
-VALUE=$(ifconfig $IFNAME | grep "inet" | grep -v "inet6" | \   #  cerca il valore
-        grep -v "127.0.0.1" | awk -F" " '{print $2}' |\        # del secondo bit
-        awk -F":" '{print $2}' | awk -F"." '{print $2}')       # sul interfaccia
-
-
+# controlla il numero di parametri passati allo script deve essere 2
 echo "---------------------------------------" >> $LOG
 if [ "$#" -ne 2 ]
   then
     echo "$NOW > uno o più parametri mancanti" >> $LOG
   exit 255
 fi
-
 
 reg='^[0-9]+$'
 if ! [[ $VALUE =~ $reg ]] ; then
