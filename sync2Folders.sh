@@ -54,7 +54,6 @@ if ! [[ $VALUE =~ ^$octet$ ]]; then
    exit 1
 fi
 
-
 # se il prercordo della destinazione non essiste lo crea
 if [ ! -d "$DST" ]; then
   log "non ho trovato il percorso alla cartella $DST, creo tutta la struttura"
@@ -64,7 +63,7 @@ fi
 # se il valore del secondo bit non è 7 ( quindi non cloud ) allora parte il sync
 if [ "$VALUE" -ne "$IIbit" ]; then
    $RSYNC -avzh $SRC $DST
-   log "procedura di sincronizzazione finita"
+   log "procedura di sincronizzazione finita\n\n\n\n"
 else
    log "questo server sembra essere un installazione cloud, esco dalla procedura\n\n\n\n"
    echo 1
