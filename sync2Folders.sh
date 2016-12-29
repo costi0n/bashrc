@@ -24,20 +24,21 @@ log () {
   echo $(now) "> $1" >> $LOG
 }
 
-
+log "avvio procedura di sincronizzazione"
 #-------------------------------------------------------------------------
 # per casi dove essistono più interfacce virutali
 IFNAME=$(ip link show | grep "mtu" | grep "UP" |\
          grep "eth" | awk -F" " '{print $2}' |\
          awk -F":" '{print $1}')
+log "trovato l'interfaccia $IFNAME"
 
 # cerca il valore del secondobit sul interfaccia
 VALUE=$(ifconfig $IFNAME | grep "inet" | grep -v "inet6" |\
         grep -v "127.0.0.1" | awk -F" " '{print $2}' |\
         awk -F":" '{print $2}' | awk -F"." '{print $2}')
+log "trovato l'ip $VALUE"
 
 # controlla il numero di parametri passati allo script deve essere 2
-echo "---------------------------------------" >> $LOG
 if [ "$#" -ne 2 ]
   then
     log "uno o più parametri mancanti"
@@ -54,13 +55,15 @@ fi
 
 # se il prercordo della destinazione non essiste lo crea
 if [ ! -d "$DST" ]; then
+  log "non ho trovato il percorso alla cartella $DST, creo tutta la struttura"
   mkdir -p $DST
 fi
 
 # se il valore del secondo bit non è 7 ( quindi non cloud ) allora parte il sync
 if [ "$VALUE" -ne "$IIbit" ]; then
    $RSYNC -avzh $SRC $DST
+   log "procedura di sincronizzazione finita"
 else
+   log "questo server sembra essere un installazione cloud, esco dalla procedura"
    echo 1
 fi
-
