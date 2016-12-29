@@ -21,7 +21,7 @@ now () {
 
 
 log () {
-  echo $(now) "> $1" >> $LOG
+  echo -en $(now) "> $1\n" >> $LOG
 }
 
 log "avvio procedura di sincronizzazione"
@@ -41,7 +41,7 @@ log "trovato l'ip $VALUE"
 # controlla il numero di parametri passati allo script deve essere 2
 if [ "$#" -ne 2 ]
   then
-    log "uno o più parametri mancanti"
+    log "uno o più parametri mancanti \n\n\n\n"
   exit 255
 fi
 
@@ -50,6 +50,7 @@ octet="(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])"
 if ! [[ $VALUE =~ ^$octet$ ]]; then
    log "si è verificato un errore, esecuzione terminata !"
    log "var VALUE = $VALUE"
+   log "\n\n\n\n"
    exit 1
 fi
 
@@ -65,6 +66,6 @@ if [ "$VALUE" -ne "$IIbit" ]; then
    $RSYNC -avzh $SRC $DST
    log "procedura di sincronizzazione finita"
 else
-   log "questo server sembra essere un installazione cloud, esco dalla procedura"
+   log "questo server sembra essere un installazione cloud, esco dalla procedura\n\n\n\n"
    echo 1
 fi
