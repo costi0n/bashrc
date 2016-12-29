@@ -45,13 +45,14 @@ if [ "$#" -ne 2 ]
   exit 255
 fi
 
-# fa un ulteriore controllo sul dato racolto nella variabile $VALUE
-reg='^[0-9]+$'
-if ! [[ $VALUE =~ $reg ]] ; then
+# controlla se la variabile VALUE contiene un valore da 0 a 255
+octet="(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])"
+if ! [[ $VALUE =~ ^$octet$ ]]; then
    log "si è verificato un errore, esecuzione terminata !"
    log "var VALUE = $VALUE"
    exit 1
 fi
+
 
 # se il prercordo della destinazione non essiste lo crea
 if [ ! -d "$DST" ]; then
