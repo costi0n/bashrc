@@ -2,7 +2,7 @@
 
 ###
 ##
-#  scripted by costi0n 4 ALGA Progect
+#  scripted by costi0n 4 ALGA Project
 #            - 28-12-2016 -
 #  sync2Folders.sh /path/source /path/destination
 #
