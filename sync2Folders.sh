@@ -22,12 +22,20 @@ now () {
    date +%Y/%m/%d\ %H:%M:%S
 }
 
-
 log () {
   echo -en $(now) "> $1\n" >> $LOG
 }
 
+taillog () {
+  LASTROWS=$(tail -n 500 $1)
+  echo "${LASTROWS}" > $1
+}
+
+# lascia soltanto le ultime 500 linee nel file log
+taillog $LOG
+
 log "----- avvio procedura di sincronizzazione -----"
+
 #-------------------------------------------------------------------------
 # per casi dove essistono più interfacce virutali
 IFNAME=$(ip link show | grep "mtu" | grep "UP" |\
