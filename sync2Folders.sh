@@ -29,6 +29,7 @@ log () {
 taillog () {
   LASTROWS=$(tail -n 500 $1)
   echo "${LASTROWS}" > $1
+  echo -en "\n\n\n\n" >> $1
 }
 
 # lascia soltanto le ultime 500 linee nel file log
