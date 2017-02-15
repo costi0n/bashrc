@@ -48,6 +48,11 @@ log "trovato l'interfaccia $IFNAME"
 VALUE=$(/sbin/ifconfig $IFNAME | grep "inet" | grep -v "inet6" |\
         grep -v "127.0.0.1" | awk -F" " '{print $2}' |\
         awk -F":" '{print $2}' | awk -F"." '{print $2}')
+
+IPADDR=$(/sbin/ifconfig $IFNAME | grep "inet" | grep -v "inet6" |\
+        grep -v "127.0.0.1" | awk -F" " '{print $2}' |\
+        awk -F":" '{print $2}' )
+
 log "trovato il secondo ottetto del l'ip: $VALUE"
 
 # controlla il numero di parametri passati allo script deve essere 2
