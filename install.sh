@@ -7,4 +7,4 @@
 ###
 
 echo -en "installazione .bashrc \n"
-mv /root/bashrc/_bashrc /root/.bashrc
+cp /root/bashrc/bashrc /root/.bashrc
